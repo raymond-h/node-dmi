@@ -15,8 +15,8 @@ process = (size, data) ->
 
 	if data.size.width? and data.size.height?
 		tileSize =
-			width: data.size.width[0]
-			height: data.size.height[0]
+			width: Number data.size.width[0]
+			height: Number data.size.height[0]
 
 	sizeTiles =
 		width: size.width / tileSize.width
@@ -33,7 +33,7 @@ process = (size, data) ->
 			delays = (Number e for e in (properties.delay ? [1]))
 			movement = properties.movement?[0] is '1'
 
-			frames = getFrames size, tileSize, frameIndex, frameCount, directions, delays
+			frames = getFrames sizeTiles, tileSize, frameIndex, frameCount, directions, delays
 
 			frameIndex += frameCount * directions
 
