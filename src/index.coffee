@@ -1,1 +1,3 @@
-# The entry point of all to come...
+module.exports =
+	Stream: require './stream'
+	parser: require './parser'
