@@ -19,6 +19,9 @@
     "grunt-mocha-test": "*"
   },
   "dependencies": {
-    "streampng": "^0.1.8"
+    "streampng": "^0.1.8",
+    "nearley": "^1.2.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "lodash": "^2.4.1"
   }
 }

@@ -14,6 +14,14 @@ module.exports = (grunt) ->
 				dest: 'lib/'
 				ext: '.js'
 
+		copy:
+			build:
+				expand: yes
+				cwd: 'src/'
+				src: '**/*.js'
+				dest: 'lib/'
+				ext: '.js'
+
 		coffeelint:
 			build:
 				files: src: ['src/**/*.coffee', 'test/**/*.coffee']
@@ -43,6 +51,17 @@ module.exports = (grunt) ->
 				files: ['src/**/*.{js,coffee}', 'test/**/*.{js,coffee}']
 				tasks: ['lint']
 
+	grunt.registerTask 'nearley', 'Invoke nearley to compile grammars', (fin, fout) ->
+		path = require 'path'
+		done = @async()
+		cmd = if process.platform is 'win32' then 'nearleyc.cmd' else 'nearleyc'
+
+		grunt.util.spawn
+			cmd: path.resolve __dirname, 'node_modules', '.bin', cmd
+			args: [fin, '--out', fout]
+
+		, done
+
 	grunt.registerTask 'default', ['lint', 'test', 'build']
 	grunt.registerTask 'dev', ['lint', 'test']
 
@@ -54,4 +73,8 @@ module.exports = (grunt) ->
 
 	grunt.registerTask 'build', [
 		'coffee:build'
+		'grammar'
+		'copy:build'
 	]
+
+	grunt.registerTask 'grammar', ['nearley:src/grammar.ne:src/grammar.js']
