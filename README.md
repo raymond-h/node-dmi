@@ -5,10 +5,17 @@ Read iconstate metadata from BYOND DMI files
 `npm install dmi`
 
 ## Example usage
-```js
-var dmi = require('dmi');
+```coffee
+fs = require 'fs'
+dmi = require 'dmi'
 
-// Do whatever you want with 'dmi'!
+dmi = new dmi.Stream
+
+fs.createReadStream 'icon.dmi'
+.pipe dmi
+
+dmi.on 'dmi data', (data) ->
+	console.log data
 ```
     
 ## License
