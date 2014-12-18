@@ -33,24 +33,24 @@ process = (size, data) ->
 			delays = (Number e for e in (properties.delay ? [1]))
 			movement = properties.movement?[0] is '1'
 
-			frames = getFrames size, frameIndex, frameCount, directions, delays
+			frames = getFrames size, tileSize, frameIndex, frameCount, directions, delays
 
 			frameIndex += frameCount * directions
 
 			{name, frames, movement}
 	}
 
-getFrames = ({width}, startOffset, count, directions, delays) ->
+getFrames = ({width}, tileSize, startOffset, count, directions, delays) ->
 	for dir in [0...directions]
 		for i in [0...count]
 			offset = startOffset + i*directions + dir
 
 			{
 				offset:
-					x: offset %% width
-					y: offset // width
+					x: offset %% width * tileSize.width
+					y: offset // width * tileSize.height
 
-				delay: delays[i]
+				delay: delays[i] * 100 # delays are in 1/10th seconds, convert to ms
 			}
 
 module.exports = {parse}
